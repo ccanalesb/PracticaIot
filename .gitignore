@@ -1,3 +1,7 @@
 
 iot
 *.png
+.vscode
+
+//folders
+/tests

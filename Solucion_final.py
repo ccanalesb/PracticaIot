@@ -6,17 +6,20 @@ import numpy as np
 import time
 from random import randint
 import math
+from networkx.algorithms import approximation as approx
+from networkx.algorithms import traversal as tr
 
 G = nx.Graph()
 
 distance = {}
 best_nodes = {}
-power_level = [15, 25, 55, 100]
+power_level = [15, 25, 55, 75]
 nodes = 0
 max_nodes = 10
 
 plt.gca().invert_yaxis()
 position = ""
+
 def add_graphical_edge(G, i,k , peso):
 	G.add_edge(i, k, weight=peso)
 	G.add_edge(k, i)
@@ -28,14 +31,23 @@ def add_graphical_edge(G, i,k , peso):
 	nx.draw_networkx_labels(G, position, labels=None)
 	plt.draw()	
 
+# Permite encontrar nodos no vecinos
+def non_neighbors_nodes(G,root):
+	edges = tr.bfs_edges(G,root)
+	item = [root] + [v for u, v in edges]
+	print item
+	for i in item:
+		print "nodo ", i, " = ",list(nx.non_neighbors(G,i))
+
 for i in range(0,max_nodes):
 	if nodes < max_nodes:
-		G.add_node(nodes, pos=(randint(0, 50), randint(0, 50) ))
+		G.add_node(nodes, pos=(randint(0, 200), randint(0, 200) ))
 		nodes = nodes + 1
 		position = nx.get_node_attributes(G, 'pos')
 		nx.draw(G,position,with_labels=True)
 		plt.figure(1)
 		plt.draw()
+
 
 for i in range(0, len(G)):
 	for j in range(0, len(G)):
@@ -63,6 +75,7 @@ for i in range(0, len(G)):
 	print distance[i]
 	distance = {}		
 
+non_neighbors_nodes(G,5)
 position = nx.get_node_attributes(G, 'pos')
 plt.gca().invert_yaxis()
 nx.draw_networkx_labels(G, position, labels=None)

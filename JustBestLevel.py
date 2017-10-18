@@ -11,7 +11,7 @@ G=nx.Graph()
 
 distance = {}
 best_nodes = {}
-power_level = [15, 25, 55, 100]
+power_level = [15, 25, 55, 75]
 nodes = 0
 max_nodes = 10
 
@@ -30,7 +30,7 @@ def add_graphical_edge(G,i,k,peso):
 
 for i in range(0,max_nodes):
 	if nodes < max_nodes:
-		G.add_node(nodes, pos=(randint(0, 50), randint(0, 50) ))
+		G.add_node(nodes, pos=(randint(0, 200), randint(0, 200) ))
 		nodes = nodes + 1
 		position = nx.get_node_attributes(G, 'pos')
 		nx.draw(G,position,with_labels=True)
