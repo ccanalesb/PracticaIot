@@ -9,6 +9,7 @@ import math
 from networkx.algorithms import approximation as approx
 from networkx.algorithms import traversal as tr
 from networkx.algorithms import tree as tree
+from networkx.drawing.nx_agraph import graphviz_layout
 
 G = nx.Graph()
 
@@ -111,20 +112,27 @@ for i in range(0, len(G)):
 	print distance[i]
 	distance = {}		
 
+result = non_neighbors_nodes(G, 5)
+calculate_matrix(result[0], result[1])
+position = nx.get_node_attributes(G, 'pos')
+plt.gca().invert_yaxis()
+nx.draw_networkx_labels(G, position, labels=None)
+plt.draw()
+plt.savefig("iot.png")
 # Asignando grafo al que sera el nuevo arbol
 
-H = nx.Graph()
+H = nx.DiGraph()
 
 
 def create_tree(H,G,root):
 	print "CREANDO ARBOL"
 	print sorted(G[root])
-	print G.nodes()
-	print H.nodes()
 	H.add_node(root)
 	first_iteration = True
 	compare_list = [root]
-	while H.nodes() < G.nodes():
+	edges = tr.bfs_edges(G, root)
+	item = [root] + [v for u, v in edges]
+	while len(H.nodes()) < len(item):
 		if first_iteration:
 			print "In first level"
 			for key, value in sorted(G[root].iteritems(), key=lambda (k, v): (v, k)):
@@ -150,11 +158,16 @@ def create_tree(H,G,root):
 	print "Terminando arbol"
 
 create_tree(H,G,5)
-result = non_neighbors_nodes(G,5)
-calculate_matrix(result[0], result[1])
-position = nx.get_node_attributes(G, 'pos')
-plt.gca().invert_yaxis()
-nx.draw_networkx_labels(G, position, labels=None)
-plt.draw()
-# plt.savefig("iot.png")
+
+plt.show()
+
+# nx.write_dot(H, 'test.dot')
+# plt.title('draw_networkx')
+# pos = nx.graphviz_layout(H, prog='dot')
+# nx.draw(H, pos, with_labels=False, arrows=False)
+# plt.savefig('nx_test.png')
+
+nx.draw(H, pos=graphviz_layout(H), node_size=1600, cmap=plt.cm.Blues,
+        node_color=range(len(H)),
+        prog='dot')
 plt.show()
