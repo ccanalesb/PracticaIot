@@ -17,7 +17,7 @@ distance = {}
 best_nodes = {}
 power_level = [15, 25, 55, 75]
 nodes = 0
-max_nodes = 10
+max_nodes = 15
 
 plt.gca().invert_yaxis()
 position = ""
@@ -34,32 +34,32 @@ hijo en el orden del BFS.
 '''
 
 def hierarchy_pos(G, root, width=1., vert_gap = 0.2, vert_loc = 0, xcenter = 0.5, 
-                  pos = None, parent = None):
-    '''If there is a cycle that is reachable from root, then this will see infinite recursion.
-       G: the graph
-       root: the root node of current branch
-       width: horizontal space allocated for this branch - avoids overlap with other branches
-       vert_gap: gap between levels of hierarchy
-       vert_loc: vertical location of root
-       xcenter: horizontal location of root
-       pos: a dict saying where all nodes go if they have been assigned
-       parent: parent of this branch.'''
-    if pos == None:
-        pos = {root:(xcenter,vert_loc)}
-    else:
-        pos[root] = (xcenter, vert_loc)
-    neighbors = G[root]
-    # if parent != None:   #this should be removed for directed graphs.
-    #     neighbors.remove(parent)  #if directed, then parent not in neighbors.
-    if len(neighbors)!=0:
-        dx = width/len(neighbors) 
-        nextx = xcenter - width/2 - dx/2
-        for neighbor in neighbors:
-            nextx += dx
-            pos = hierarchy_pos(G,neighbor, width = dx, vert_gap = vert_gap, 
-                                vert_loc = vert_loc-vert_gap, xcenter=nextx, pos=pos, 
-                                parent = root)
-    return pos
+				  pos = None, parent = None):
+	'''If there is a cycle that is reachable from root, then this will see infinite recursion.
+	   G: the graph
+	   root: the root node of current branch
+	   width: horizontal space allocated for this branch - avoids overlap with other branches
+	   vert_gap: gap between levels of hierarchy
+	   vert_loc: vertical location of root
+	   xcenter: horizontal location of root
+	   pos: a dict saying where all nodes go if they have been assigned
+	   parent: parent of this branch.'''
+	if pos == None:
+		pos = {root:(xcenter,vert_loc)}
+	else:
+		pos[root] = (xcenter, vert_loc)
+	neighbors = G[root]
+	# if parent != None:   #this should be removed for directed graphs.
+	#     neighbors.remove(parent)  #if directed, then parent not in neighbors.
+	if len(neighbors)!=0:
+		dx = width/len(neighbors) 
+		nextx = xcenter - width/2 - dx/2
+		for neighbor in neighbors:
+			nextx += dx
+			pos = hierarchy_pos(G,neighbor, width = dx, vert_gap = vert_gap, 
+								vert_loc = vert_loc-vert_gap, xcenter=nextx, pos=pos, 
+								parent = root)
+	return pos
 
 def add_graphical_edge(G, i,k , peso):
 	G.add_edge(i, k, weight=peso)
@@ -152,6 +152,66 @@ plt.savefig("iot.png")
 
 H = nx.DiGraph()
 
+# def check_parent(H, child, root):
+# 	if H.predecessors(child):
+# 		root
+# 	# print parent
+# 	return parent
+
+
+def find_root(G, node, root_path):
+	if list(G.predecessors(node)) != []:  # True if there is a predecessor, False otherwise
+		# print list(G.predecessors(node))
+		root_path += 1
+		(root, root_path) = find_root(G, list(G.predecessors(node))[0], root_path )
+	else:
+		root = node
+		root_path = root_path
+	return root, root_path
+
+def scheduling(H, root, bfs, n_ch):
+	sche = [[]] * n_ch
+	level = 0
+	print bfs
+	print len(bfs)
+	for item in bfs:
+		level = 0
+		if int(item[0]) == int(root):
+			print item[0]
+			print item
+			sche[0].append(item)
+			bfs.remove(item)
+			level = 0
+		else:
+			root_path = 0
+			level = find_root(H, item[0], root_path)
+			current_level = level[1]%n_ch
+			if current_level == 0:
+				current_level = n_ch
+			print "CURRENT LEVEL" + str(current_level)
+			timeslot = len(sche[current_level]) - 1
+			print "TIMESLOT" + str(timeslot)
+			can_push = False
+			for ch in sche:
+				if ch[timeslot] == []:
+					continue
+				if not (item[0] in ch[timeslot] or item[1] in ch[timeslot]):
+					can_push = True
+			if can_push:
+				print "ITEEEM"
+				print item
+				sche[level[1]].append(item)
+			# level = check_parent(H, bfs[i][0], root)
+			print level
+		# else:
+		# 	ch
+		
+	for i in range(len(sche)):
+		print sche[i]
+	# print sche
+
+
+
 
 def create_tree(H,G,root):
 	print "CREANDO ARBOL"
@@ -183,8 +243,18 @@ def create_tree(H,G,root):
 						compare_list.append(child_key)
 						print "%s: %s" % (child_key, child_value)
 		# count += 1
+	edges = tr.bfs_edges(H, root)
+	item = [root] + [v for u, v in edges]
+	print "BFS"
+	bfs = list(nx.bfs_edges(H, root))
+	print(bfs)
+	# print item 
+	print "DFS"
+	T = nx.dfs_tree(H, root)
+	print(T.edges())
 	print tree.is_tree(H)
 	print "Terminando arbol"
+	scheduling(H,root,bfs,4)
 
 create_tree(H,G,5)
 
