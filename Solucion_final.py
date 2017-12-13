@@ -170,7 +170,9 @@ def find_root(G, node, root_path):
 	return root, root_path
 
 def scheduling(H, root, bfs, n_ch):
-	sche = [[]] * n_ch
+	sche = {}
+	for i in range(n_ch):
+		sche[i] = []
 	level = 0
 	print bfs
 	print len(bfs)
@@ -180,7 +182,7 @@ def scheduling(H, root, bfs, n_ch):
 			print item[0]
 			print item
 			sche[0].append(item)
-			bfs.remove(item)
+			# bfs.remove(item)
 			level = 0
 		else:
 			root_path = 0
@@ -189,18 +191,22 @@ def scheduling(H, root, bfs, n_ch):
 			if current_level == 0:
 				current_level = n_ch
 			print "CURRENT LEVEL" + str(current_level)
-			timeslot = len(sche[current_level]) - 1
-			print "TIMESLOT" + str(timeslot)
+			timeslot = len(sche[current_level])
+			print "TIMESLOT " + str(timeslot)
 			can_push = False
-			for ch in sche:
-				if ch[timeslot] == []:
-					continue
-				if not (item[0] in ch[timeslot] or item[1] in ch[timeslot]):
+			print sche
+			# for ch in sche:
+			# 	print ch
+			if sche[current_level] == []:
+				can_push = True
+				# 	continue
+			if sche[current_level] != []:
+				if not (item[0] in sche[timeslot] or item[1] in sche[timeslot]):
 					can_push = True
 			if can_push:
 				print "ITEEEM"
 				print item
-				sche[level[1]].append(item)
+				sche[current_level].append(item)
 			# level = check_parent(H, bfs[i][0], root)
 			print level
 		# else:
