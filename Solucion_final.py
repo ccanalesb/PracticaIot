@@ -187,21 +187,14 @@ def scheduling(H, root, bfs, n_ch):
 			current_level = level[1]%n_ch
 			if current_level == 0:
 				current_level = n_ch
-			print "CURRENT LEVEL" + str(current_level)
 			timeslot = len(sche[current_level])
-			print "TIMESLOT " + str(timeslot)
 			can_push = False
-			print sche
-			# for ch in sche:
-			# 	print ch
-			# if sche[current_level] == []:
-			# 	can_push = True
-			# 	# 	continue
-			# if sche[current_level] != []:
-			# 	if not (item[0] in sche[timeslot] or item[1] in sche[timeslot]):
-			# 		can_push = True
-			can_push = can_push_sche(sche,timeslot,item,n_ch)
+			timeslot_2, can_push = can_push_sche(sche, timeslot, item, n_ch)
+			print timeslot_2
+			print can_push
 			if can_push:
+				while len(sche[current_level ] ) < timeslot_2:
+					sche[current_level].append((None,None))
 				sche[current_level].append(item)
 			else:
 				pending.append(item)
@@ -215,25 +208,12 @@ def scheduling(H, root, bfs, n_ch):
 def can_push_sche(scheduling, timeslot, item, n_ch):
 	can_save = True
 	for i in range(0,n_ch):
-		print i
 		channel = scheduling[i]
-		print channel
-		print "TIMESLOT " + str(timeslot)
-		print "CANAL "+ str(len(channel))
-		if timeslot <= len(channel):
-			print "ENTRE"
-			print item
-			print item[0]
-			print item[1]
-			print "cosa"
-			print timeslot
-			print "CHANNELL"
-			print channel
-			print channel[timeslot]
+		if timeslot < len(channel):
 			if item[0] in channel[timeslot] or item[1] in channel[timeslot]:
-				print "ENTRE2"
-				return False
-	return can_save
+				timeslot = timeslot +1
+				can_push_sche(scheduling, timeslot, item, n_ch)
+	return timeslot,can_save
 
 
 def create_tree(H,G,root):
