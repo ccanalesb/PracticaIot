@@ -49,7 +49,8 @@ for i in range(0,len(G)):
 		if j == len(G)-1: 
 			i_is_connected = False
 			i_level_conected = 0
-			print "**************************************"	
+			print "***python -mpip install .
+***********************************"	
 			print "REVISANDO NODO " + str(i)
 			for k in range(0, len(distance[i])): 
 				print " con nodo "+str(distance[i][k][0])+ " y peso "+str(distance[i][k][1])

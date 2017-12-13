@@ -200,7 +200,7 @@ def scheduling(H, root, bfs, n_ch):
 			# if sche[current_level] != []:
 			# 	if not (item[0] in sche[timeslot] or item[1] in sche[timeslot]):
 			# 		can_push = True
-			can_push = can_push_sche(sche,timeslot,item)
+			can_push = can_push_sche(sche,timeslot,item,n_ch)
 			if can_push:
 				sche[current_level].append(item)
 			else:
@@ -212,16 +212,28 @@ def scheduling(H, root, bfs, n_ch):
 	print "PENDIENTES"
 	print pending
 
-def can_push_sche(scheduling, timeslot, item):
-	can_save = False
-	for value in scheduling:
-		channel = scheduling[value]
+def can_push_sche(scheduling, timeslot, item, n_ch):
+	can_save = True
+	for i in range(0,n_ch):
+		print i
+		channel = scheduling[i]
+		print channel
 		print "TIMESLOT " + str(timeslot)
 		print "CANAL "+ str(len(channel))
-		if timeslot < len(channel):
-			if not (item[0] in channel[timeslot] or item[1] in channel[timeslot]):
-				can_save = True
-
+		if timeslot <= len(channel):
+			print "ENTRE"
+			print item
+			print item[0]
+			print item[1]
+			print "cosa"
+			print timeslot
+			print "CHANNELL"
+			print channel
+			print channel[timeslot]
+			if item[0] in channel[timeslot] or item[1] in channel[timeslot]:
+				print "ENTRE2"
+				return False
+	return can_save
 
 
 def create_tree(H,G,root):
