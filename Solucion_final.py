@@ -170,19 +170,16 @@ def find_root(G, node, root_path):
 	return root, root_path
 
 def scheduling(H, root, bfs, n_ch):
+	pending = []
 	sche = {}
 	for i in range(n_ch):
 		sche[i] = []
 	level = 0
 	print bfs
-	print len(bfs)
 	for item in bfs:
 		level = 0
 		if int(item[0]) == int(root):
-			print item[0]
-			print item
 			sche[0].append(item)
-			# bfs.remove(item)
 			level = 0
 		else:
 			root_path = 0
@@ -197,25 +194,33 @@ def scheduling(H, root, bfs, n_ch):
 			print sche
 			# for ch in sche:
 			# 	print ch
-			if sche[current_level] == []:
-				can_push = True
-				# 	continue
-			if sche[current_level] != []:
-				if not (item[0] in sche[timeslot] or item[1] in sche[timeslot]):
-					can_push = True
+			# if sche[current_level] == []:
+			# 	can_push = True
+			# 	# 	continue
+			# if sche[current_level] != []:
+			# 	if not (item[0] in sche[timeslot] or item[1] in sche[timeslot]):
+			# 		can_push = True
+			can_push = can_push_sche(sche,timeslot,item)
 			if can_push:
-				print "ITEEEM"
-				print item
 				sche[current_level].append(item)
+			else:
+				pending.append(item)
 			# level = check_parent(H, bfs[i][0], root)
-			print level
-		# else:
-		# 	ch
-		
+	print "MATRIZ"
 	for i in range(len(sche)):
 		print sche[i]
-	# print sche
+	print "PENDIENTES"
+	print pending
 
+def can_push_sche(scheduling, timeslot, item):
+	can_save = False
+	for value in scheduling:
+		channel = scheduling[value]
+		print "TIMESLOT " + str(timeslot)
+		print "CANAL "+ str(len(channel))
+		if timeslot < len(channel):
+			if not (item[0] in channel[timeslot] or item[1] in channel[timeslot]):
+				can_save = True
 
 
 
