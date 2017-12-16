@@ -36,22 +36,10 @@ def scheduling(H, root, bfs, n_ch):
 			else:
 				pending.append(item)
 			# level = check_parent(H, bfs[i][0], root)
-	print "MATRIZ"
-	for i in range(len(sche)):
-		print sche[i]
-	print "PENDIENTES"
-	print pending
-	# max = 0
-	# for i in range(len(sche)):
-	# 	if len(sche[i]) > max:
-	# 		max = len(sche[i])
-	# for i in range(len(sche)):
-	# 	if len(sche[i]) < max:
-	# 		for i in range(abs(len(sche[i])-max)):
-	# 			sche[i].append((None,None))
-	# import pandas
-	# df = pandas.DataFrame(sche)
-	# print df
+	# print "PENDIENTES"
+	# print pending
+	return sche
+
 
 
 def can_push_sche(scheduling, timeslot, item, n_ch):

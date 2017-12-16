@@ -56,8 +56,33 @@ print "BFS"
 bfs = list(nx.bfs_edges(H, root))
 
 start = time.time()
-scheduling(H, root, bfs, n_ch)
+sche = scheduling(H, root, bfs, n_ch)
 end = time.time()
+print "MATRIZ"
+to_csv = []
+for i in range(len(sche)):
+    print sche[i]
+    to_csv_temp = []
+    for tup in sche[i]:
+        to_csv_temp.append(str(tup))
+    to_csv.append(to_csv_temp)
+import csv
+scheduling_file = open('scheduling_result.csv', 'w')
+with scheduling_file:
+   writer = csv.writer(scheduling_file, delimiter=',')
+   writer.writerows(to_csv)
+# max = 0
+# for i in range(len(sche)):
+#     if len(sche[i]) > max:
+#         max = len(sche[i])
+# for i in range(len(sche)):
+#     if len(sche[i]) < max:
+#         for i in range(abs(len(sche[i])-max)-1):
+#             sche[i].append((None,None))
+	# import pandas
+	# df = pandas.DataFrame(sche)
+	# print df
+
 
 print "Tiempo Generacion Scheduling"
 print(end-start)
