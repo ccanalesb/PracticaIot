@@ -50,7 +50,7 @@ G = generate_graph(G, max_nodes, distance, power_level, nodes)
 start = time.time()
 generate_tree(H, G, root)
 end = time.time()
-print "Tiempo Generación Abol"
+print "Tiempo Generacion Abol"
 print(end-start)
 print "BFS"
 bfs = list(nx.bfs_edges(H, root))
@@ -59,7 +59,7 @@ start = time.time()
 scheduling(H, root, bfs, n_ch)
 end = time.time()
 
-print "Tiempo Generación Scheduling"
+print "Tiempo Generacion Scheduling"
 print(end-start)
 
 plt.show()

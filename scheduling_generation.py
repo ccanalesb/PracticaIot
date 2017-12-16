@@ -25,7 +25,7 @@ def scheduling(H, root, bfs, n_ch):
 			level = find_root(H, item[0], root_path)
 			current_level = level[1] % n_ch
 			if current_level == 0:
-				current_level = n_ch
+				current_level = n_ch - 1 
 			timeslot = len(sche[current_level])
 			can_push = False
 			timeslot_2, can_push = can_push_sche(sche, timeslot, item, n_ch)
