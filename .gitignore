@@ -5,3 +5,4 @@ iot
 
 //folders
 /tests
+*.pyc

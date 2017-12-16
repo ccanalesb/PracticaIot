@@ -1,0 +1,5 @@
+[DEFAULT]
+max_nodes: 10
+root: 5
+cantidad_canales: 4
+niveles_de_potencia: 15, 25, 55, 75
