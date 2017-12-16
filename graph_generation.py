@@ -49,7 +49,7 @@ def generate_graph(G, max_nodes, distance, power_level, nodes):
     plt.gca().invert_yaxis()
     nx.draw_networkx_labels(G, position, labels=None)
     plt.draw()
-    plt.savefig(config['DEFAULT']['grafo'])
+    plt.savefig(str(config['DEFAULT']['grafo']))
     return G
 
 
