@@ -8,9 +8,10 @@ config = configparser.ConfigParser()
 config.read('config.yml', encoding='utf-8-sig')
 
 def generate_graph(G, max_nodes, distance, power_level, nodes):
+    max_distance = int(config['DEFAULT']['distancia_maxima'])
     for i in range(0, max_nodes):
         if nodes < max_nodes:
-            G.add_node(nodes, pos=(randint(0, 200), randint(0, 200)))
+            G.add_node(nodes, pos=(randint(0, max_distance), randint(0, max_distance)))
             nodes = nodes + 1
             position = nx.get_node_attributes(G, 'pos')
             nx.draw(G, position, with_labels=True)

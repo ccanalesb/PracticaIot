@@ -1,7 +1,8 @@
 [DEFAULT]
-max_nodes: 10
+max_nodes: 60
 root: 5
-cantidad_canales: 4
-niveles_de_potencia: 15, 25, 55, 75
-grafo: grafo.png
-arbol: arbol.png
+cantidad_canales: 8
+niveles_de_potencia: 25, 55, 75, 105
+distancia_maxima: 400
+grafo: ./img/grafo.png
+arbol: ./img/arbol.png

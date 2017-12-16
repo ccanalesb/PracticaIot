@@ -15,6 +15,7 @@ from tree_generation import generate_tree
 from scheduling_generation import scheduling
 from hierarchy_pos import hierarchy_pos
 import configparser
+import time
 config = configparser.ConfigParser()
 config.read('config.yml', encoding='utf-8-sig')
 
@@ -45,10 +46,22 @@ hijo en el orden del BFS.
 
 # Asignando grafo al que sera el nuevo arbol
 G = generate_graph(G, max_nodes, distance, power_level, nodes)
+
+start = time.time()
 generate_tree(H, G, root)
+end = time.time()
+print "Tiempo Generación Abol"
+print(end-start)
 print "BFS"
 bfs = list(nx.bfs_edges(H, root))
+
+start = time.time()
 scheduling(H, root, bfs, n_ch)
+end = time.time()
+
+print "Tiempo Generación Scheduling"
+print(end-start)
+
 plt.show()
 pos = hierarchy_pos(H, root)
 nx.draw(H, pos=pos, with_labels=True)
