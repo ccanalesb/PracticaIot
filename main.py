@@ -59,12 +59,23 @@ start = time.time()
 sche = scheduling(H, root, bfs, n_ch)
 end = time.time()
 print "MATRIZ"
+max = 0
+for i in range(len(sche)):
+    if len(sche[i]) > max:
+        max = len(sche[i])
 to_csv = []
+first_row = []
+for i in range(0,max):
+    # first_row.append(i)
+    first_row.insert(len(first_row), i)
+first_row.insert(0, "Channel/Timeslot")
+to_csv.append(first_row)
 for i in range(len(sche)):
     print sche[i]
     to_csv_temp = []
     for tup in sche[i]:
         to_csv_temp.append(str(tup))
+    to_csv_temp.insert(0,"Canal: "+ str(i))
     to_csv.append(to_csv_temp)
 import csv
 scheduling_file = open('scheduling_result.csv', 'w')
