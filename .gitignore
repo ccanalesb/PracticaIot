@@ -6,3 +6,4 @@ iot
 //folders
 /tests
 *.pyc
+.DS_Store

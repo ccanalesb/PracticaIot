@@ -1,5 +1,9 @@
 from networkx.algorithms import traversal as tr
 from networkx.algorithms import tree as tree
+# import matplotlib.pyplot as plt
+# import configparser
+# config = configparser.ConfigParser()
+# config.read('config.yml', encoding='utf-8-sig')
 
 def generate_tree(H, G, root):
 	print "CREANDO ARBOL"
