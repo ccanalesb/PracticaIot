@@ -24,7 +24,7 @@ Para ejecutar las pruebas:
     $ python main.py
 ```
 
-Para mas información sobre la utilidad de cada función pincha [aquí](www.google.cl)
+Para mas información sobre la utilidad de cada función pincha [aquí](https://github.com/ccanalesb/PracticaIot/blob/master/Reutilizaci_n_de_Frecuencias%20Explicaci%C3%B3n.pdf)
 
 #### Autores
 * *Cristian Canales - cristian.canales@mail.udp.cl* 
