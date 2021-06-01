@@ -67,7 +67,7 @@ Sphinx==1.5.6
 subprocess32==3.2.7
 tornado==4.5.1
 traitlets==4.3.2
-urllib3==1.21.1
+urllib3==1.26.5
 wcwidth==0.1.7
 wrapt==1.10.11
 wxPython==3.0.2.0
