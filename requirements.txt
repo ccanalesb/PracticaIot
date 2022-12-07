@@ -7,7 +7,7 @@ backports.functools-lru-cache==1.4
 backports.shutil-get-terminal-size==1.0.0
 basemap==1.0.7
 cairocffi==0.8.0
-certifi==2017.4.17
+certifi==2022.12.7
 cffi==1.9.1
 chardet==3.0.4
 colorspacious==1.1.0
